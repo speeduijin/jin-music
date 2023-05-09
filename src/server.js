@@ -4,6 +4,8 @@ import session from 'express-session';
 import flash from 'express-flash';
 import { localsMiddleware } from './middlewares';
 
+import Song from './models/Song';
+
 import rootRouter from './routers/rootRouter';
 
 const app = express();
@@ -30,6 +32,15 @@ app.use('/', rootRouter);
 /*
 Add more routers here!
 */
+
+app.get('/chart', async (req, res) => {
+  return res.render('chart', { pageTitle: 'Chart' });
+});
+
+app.get('/api/songs', async (req, res) => {
+  const songs = await Song.findAll({ order: [['playCount', 'DESC']] });
+  res.json(songs);
+});
 
 // error
 app.use((req, res, next) => {
