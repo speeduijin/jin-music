@@ -6,7 +6,7 @@ import { localsMiddleware } from './middlewares';
 
 import Song from './models/Song';
 
-import rootRouter from './routers/rootRouter';
+import pageRouter from './routers/pageRouter';
 
 const app = express();
 const logger = morgan('dev');
@@ -28,14 +28,10 @@ app.use(localsMiddleware);
 app.use('/uploads', express.static('uploads'));
 app.use('/static', express.static('assets'));
 
-app.use('/', rootRouter);
+app.use(pageRouter);
 /*
 Add more routers here!
 */
-
-app.get('/chart', async (req, res) => {
-  return res.render('chart', { pageTitle: 'Chart' });
-});
 
 app.get('/api/songs', async (req, res) => {
   const songs = await Song.findAll({ order: [['playCount', 'DESC']] });
