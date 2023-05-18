@@ -4,8 +4,6 @@ import session from 'express-session';
 import flash from 'express-flash';
 import { localsMiddleware } from './middlewares';
 
-import Song from './models/Song';
-
 import pageRouter from './routers/pageRouter';
 
 const app = express();
@@ -29,14 +27,6 @@ app.use('/uploads', express.static('uploads'));
 app.use('/static', express.static('assets'));
 
 app.use(pageRouter);
-/*
-Add more routers here!
-*/
-
-app.get('/api/songs', async (req, res) => {
-  const songs = await Song.findAll({ order: [['playCount', 'DESC']] });
-  res.json(songs);
-});
 
 // error
 app.use((req, res, next) => {
