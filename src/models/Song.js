@@ -17,6 +17,10 @@ class Song extends Model {
           type: DataTypes.STRING(255),
           allowNull: false,
         },
+        youtubeVideoId: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+        },
         playCount: {
           type: DataTypes.INTEGER,
           allowNull: false,
