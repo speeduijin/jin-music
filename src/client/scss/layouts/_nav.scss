@@ -1,0 +1,30 @@
+.nav-bar {
+  position: fixed;
+  height: 64px;
+  background-color: $bg;
+
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    height: 100%;
+    padding: 0 16px;
+  }
+
+  &-left {
+    img {
+      display: block;
+    }
+  }
+
+  &-center {
+    .nav-list {
+      display: flex;
+
+      .nav-item {
+        padding: 0 16px;
+      }
+    }
+  }
+}

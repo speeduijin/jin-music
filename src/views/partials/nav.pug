@@ -1,0 +1,21 @@
+header
+  .nav-bar
+    .nav-bar-wrapper
+      .nav-bar-left
+        h1.logo
+          a(href='/')
+            picture
+              img(alt, src='/static/img/Logo.svg')
+      .nav-bar-center
+        nav
+          h2.visually-hidden(style='display: none') 메뉴
+          ul.nav-list
+            li.nav-item
+              a(href='/')
+                i.fa-solid.fa-house
+            li.nav-item
+              a(href='/chart')
+                i.fa-solid.fa-chart-line
+
+      .nav-bar-right
+        i.fa-regular.fa-circle-user
