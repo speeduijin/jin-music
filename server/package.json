@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "main": "dist/index.js",
   "scripts": {
-    "start": "pm2 start ./dist/index",
-    "build": "cross-env NODE_ENV=production PORT=80 && npx tsc",
+    "start": "cross-env NODE_ENV=production PORT=80 pm2 start ./dist/index",
+    "build": "npx tsc",
     "dev": "nodemon --exec ts-node --files ./src/index.ts"
   },
   "license": "MIT",
