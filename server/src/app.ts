@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
@@ -5,7 +6,6 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import hpp from 'hpp';
 
-import indexRouter from './routes/index';
 import { notFoundMiddleware, errorHandler } from './middlewares';
 
 const app = express();
@@ -37,12 +37,15 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(morgan(logFormat));
+app.use(express.static(path.join(__dirname, '../../client/dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session(sessionOption));
 
-app.use('/', indexRouter);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/dist', 'index.html'));
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandler);
