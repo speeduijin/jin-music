@@ -5,7 +5,7 @@
   "scripts": {
     "start": "pm2 start ./dist/index",
     "build": "cross-env NODE_ENV=production PORT=80 && npx tsc",
-    "dev": "nodemon --exec ts-node --files ./src/index "
+    "dev": "nodemon --exec ts-node --files ./src/index.ts"
   },
   "license": "MIT",
   "dependencies": {
