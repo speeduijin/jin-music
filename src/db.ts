@@ -5,10 +5,10 @@ import logger from './logger';
 const env = (process.env.NODE_ENV as 'production' | 'test') || 'development';
 const config = configObj[env];
 
-const conn = createPool(config);
+const pool = createPool(config);
+const promisePool = pool.promise();
 
-conn
-  .promise()
+promisePool
   .execute('SELECT 1')
   .then(() => {
     logger.info('✅ Connected to DB');
@@ -17,4 +17,4 @@ conn
     logger.error('❌ DB Error', err);
   });
 
-export default conn;
+export default promisePool;
