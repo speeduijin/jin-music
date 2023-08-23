@@ -1,9 +1,12 @@
 import { RequestHandler, ErrorRequestHandler } from 'express';
-import logger from './logger';
+import createHttpError from 'http-errors';
+import logger from '../logger';
 
-export const notFoundMiddleware: RequestHandler = (req, res, next) => {
-  const error = new Error(`${req.method} ${req.url} route does not exist.`);
-  error.status = 404;
+export const notFound: RequestHandler = (req, res, next) => {
+  const error = createHttpError(
+    404,
+    `The requested URL '${req.method} ${req.url}' was not found on this server.`,
+  );
   next(error);
 };
 
