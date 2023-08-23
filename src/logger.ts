@@ -20,7 +20,7 @@ const fileFormat = printf(
 
 const loggerFormat = combine(
   labelFormat({ label: 'jin-music-api' }),
-  timestampFormat(),
+  timestampFormat({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
   fileFormat,
 );
 
