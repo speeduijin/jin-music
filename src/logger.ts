@@ -1,9 +1,9 @@
 import path from 'path';
 import { createLogger, format, transports } from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
+import stripAnsi from 'strip-ansi'; // ANSI 이스케이프 코드를 제거하기 위한 패키지
 
 const logDir = path.join(process.cwd(), '/logs');
-
 const {
   combine,
   printf,
@@ -15,7 +15,7 @@ const {
 
 const fileFormat = printf(
   ({ level, message, label, timestamp }) =>
-    `${timestamp} [${label}] ${level}: ${message}`,
+    `${timestamp} [${label}] ${level}: ${stripAnsi(message)}`,
 );
 
 const loggerFormat = combine(
@@ -42,16 +42,10 @@ const infoTransport = new DailyRotateFile({
   dirname: logDir,
   ...commonTransportOptions,
 });
-const httpTransport = new DailyRotateFile({
-  level: 'http',
-  filename: `%DATE%-http.log`,
-  dirname: `${logDir}/http`,
-  ...commonTransportOptions,
-});
 
 const logger = createLogger({
   format: loggerFormat,
-  transports: [errorTransport, infoTransport, httpTransport],
+  transports: [errorTransport, infoTransport],
 });
 
 if (process.env.NODE_ENV !== 'production')

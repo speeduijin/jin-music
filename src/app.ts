@@ -29,7 +29,7 @@ app.use(
   morgan(isProduction ? 'combined' : 'dev', {
     stream: {
       write: (message) => {
-        logger.http(message.trim());
+        logger.info(message);
       },
     },
   }),
@@ -49,6 +49,10 @@ app.use(
     },
   }),
 );
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandler);
