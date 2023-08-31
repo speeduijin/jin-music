@@ -1,8 +1,8 @@
 import { RequestHandler, ErrorRequestHandler } from 'express';
 import createHttpError from 'http-errors';
-import logger from '../logger';
+import logger from './config/logger';
 
-export const notFound: RequestHandler = (req, res, next) => {
+export const notFoundHandler: RequestHandler = (req, res, next) => {
   const error = createHttpError(
     404,
     `The requested URL '${req.method} ${req.url}' was not found on this server.`,

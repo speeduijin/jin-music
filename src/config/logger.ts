@@ -1,9 +1,8 @@
-import path from 'path';
 import { createLogger, format, transports } from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
-import stripAnsi from 'strip-ansi'; // ANSI 이스케이프 코드를 제거하기 위한 패키지
+import stripAnsi from 'strip-ansi';
+import path from 'path';
 
-const logDir = path.join(process.cwd(), '/logs');
 const {
   combine,
   printf,
@@ -13,13 +12,15 @@ const {
   simple,
 } = format;
 
+const logDir = path.join(process.cwd(), '/logs');
+
 const fileFormat = printf(
   ({ level, message, label, timestamp }) =>
     `${timestamp} [${label}] ${level}: ${stripAnsi(message)}`,
 );
 
 const loggerFormat = combine(
-  labelFormat({ label: 'jin-music-api' }),
+  labelFormat({ label: 'express-boilerplate' }),
   timestampFormat({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
   fileFormat,
 );
@@ -36,6 +37,7 @@ const errorTransport = new DailyRotateFile({
   dirname: `${logDir}/error`,
   ...commonTransportOptions,
 });
+
 const infoTransport = new DailyRotateFile({
   level: 'info',
   filename: `%DATE%.log`,

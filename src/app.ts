@@ -1,12 +1,12 @@
 import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import hpp from 'hpp';
 
-import logger from './logger';
-import { notFound, errorHandler } from './middlewares/errorHandler';
+import { notFoundHandler, errorHandler } from './middlewares';
+import logger from './config/logger';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
@@ -19,11 +19,11 @@ if (isProduction) {
       // contentSecurityPolicy: false,
       // crossOriginResourcePolicy: false,
     }),
+
+    // TODO: form 있는 경우 XSS, CSRF 방어 필요!!!
+    // TODO: SQL Injection 방어 필요!!!
   );
-  app.use(hpp());
 }
-// TODO: form 있는 경우 XSS, CSRF 방어 필요!!!
-// TODO: SQL Injection 방어 필요!!!
 
 app.use(
   morgan(isProduction ? 'combined' : 'dev', {
@@ -34,9 +34,10 @@ app.use(
     },
   }),
 );
-app.use(express.urlencoded({ extended: true })); // extended - 객체로 변환
 app.use(express.json());
-app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(express.urlencoded({ extended: true })); // extended - 객체로 변환
+app.use(cookieParser());
+app.use(compression());
 app.use(
   session({
     secret: process.env.COOKIE_SECRET!, // !: Non-Null
@@ -51,10 +52,10 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('hello world');
 });
 
-app.use(notFound);
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 export default app;
