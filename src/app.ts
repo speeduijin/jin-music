@@ -2,14 +2,20 @@ import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
+import passport from 'passport';
 import morgan from 'morgan';
 import helmet from 'helmet';
 
-import { notFoundHandler, errorHandler } from './middlewares';
+import pageRouter from './routes/page';
+import authRouter from './routes/auth';
+import { notFoundHandler, errorHandler } from './middlewares/error';
+import passportConfig from './config/passport';
 import logger from './config/logger';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
+
+passportConfig();
 
 if (isProduction) {
   app.enable('trust proxy');
@@ -50,10 +56,11 @@ app.use(
     },
   }),
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.get('/', (req, res) => {
-  res.send('hello world');
-});
+app.use('/', pageRouter);
+app.use('/auth', authRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
