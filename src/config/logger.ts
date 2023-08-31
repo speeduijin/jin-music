@@ -20,7 +20,7 @@ const fileFormat = printf(
 );
 
 const loggerFormat = combine(
-  labelFormat({ label: 'express-boilerplate' }),
+  labelFormat({ label: 'jin-music-api' }),
   timestampFormat({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
   fileFormat,
 );
