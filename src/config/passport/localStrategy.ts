@@ -4,6 +4,7 @@ import { FieldPacket } from 'mysql2';
 import bcrypt from 'bcrypt';
 import { promisePool } from '../db';
 import logger from '../logger';
+import User from '../../types/user';
 
 export default () => {
   passport.use(
@@ -14,10 +15,10 @@ export default () => {
       },
       async (email, password, done) => {
         try {
-          const [rows]: [Express.User[], FieldPacket[]] =
-            await promisePool.execute('SELECT * FROM users WHERE email = ?', [
-              email,
-            ]);
+          const [rows]: [User[], FieldPacket[]] = await promisePool.execute(
+            'SELECT * FROM users WHERE email = ?',
+            [email],
+          );
           const exUser = rows[0];
 
           if (exUser) {

@@ -4,11 +4,12 @@ import { FieldPacket } from 'mysql2';
 import bcrypt from 'bcrypt';
 import { promisePool } from '../config/db';
 import logger from '../config/logger';
+import User from '../types/user';
 
 const join: RequestHandler = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const [rows]: [Express.User[], FieldPacket[]] = await promisePool.execute(
+    const [rows]: [User[], FieldPacket[]] = await promisePool.execute(
       'SELECT * FROM users WHERE email = ?',
       [email],
     );
@@ -33,7 +34,7 @@ const join: RequestHandler = async (req, res, next) => {
 const login: RequestHandler = (req, res, next) => {
   passport.authenticate(
     'local',
-    (authError: any, user: Express.User, info: { message: string }) => {
+    (authError: any, user: User, info: { message: string }) => {
       if (authError) {
         logger.error(authError);
         return next(authError);

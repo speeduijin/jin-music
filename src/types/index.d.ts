@@ -1,13 +1,8 @@
-import { RowDataPacket } from 'mysql2';
+import IUser from './user';
 
 declare global {
   namespace Express {
-    // tslint:disable-next-line:no-empty-interface
-    interface User extends RowDataPacket {
-      id: number;
-      email: string;
-      password: string;
-    }
+    interface User extends IUser {}
   }
 }
 

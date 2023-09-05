@@ -2,6 +2,7 @@ import passport from 'passport';
 import { FieldPacket } from 'mysql2';
 import { promisePool } from '../db';
 import local from './localStrategy';
+import User from '../../types/user';
 
 export default () => {
   passport.serializeUser((user, done) => {
@@ -9,7 +10,7 @@ export default () => {
   });
 
   passport.deserializeUser(async (id, done) => {
-    const [rows]: [Express.User[], FieldPacket[]] = await promisePool.execute(
+    const [rows]: [User[], FieldPacket[]] = await promisePool.execute(
       'SELECT * FROM users WHERE id = ?',
       [id],
     );
