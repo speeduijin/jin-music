@@ -1,6 +1,6 @@
 import express from 'express';
 import { join, login, logout } from '../controllers/auth';
-import { isLoggedIn, isNotLoggedIn } from '../middlewares/auth';
+import { isLoggedIn, isNotLoggedIn } from '../utils/authMiddleware';
 
 const router = express.Router();
 

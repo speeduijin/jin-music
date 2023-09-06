@@ -2,8 +2,8 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { FieldPacket } from 'mysql2';
 import bcrypt from 'bcrypt';
+import { isValidEmail, isValidPassword } from '../../utils/validation';
 import { promisePool } from '../db';
-import logger from '../logger';
 import User from '../../types/user';
 
 export default () => {
@@ -15,26 +15,41 @@ export default () => {
       },
       async (email, password, done) => {
         try {
+          if (!isValidEmail(email)) {
+            return done(null, false, {
+              message: 'invalidEmail',
+            });
+          }
+
+          if (!isValidPassword(password))
+            return done(null, false, {
+              message: 'invalidPassword',
+            });
+
           const [rows]: [User[], FieldPacket[]] = await promisePool.execute(
             'SELECT * FROM users WHERE email = ?',
             [email],
           );
+
           const exUser = rows[0];
 
           if (exUser) {
             const result = await bcrypt.compare(password, exUser.password);
 
             if (result) {
-              done(null, exUser);
-            } else {
-              done(null, false, { message: '비밀번호가 일치하지 않습니다.' });
+              return done(null, exUser);
             }
-          } else {
-            done(null, false, { message: '가입되지 않은 회원입니다.' });
+
+            return done(null, false, {
+              message: 'incorrectPassword',
+            });
           }
+
+          return done(null, false, {
+            message: 'noUser',
+          });
         } catch (error) {
-          logger.error(error);
-          done(error);
+          return done(error);
         }
       },
     ),

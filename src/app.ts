@@ -6,9 +6,8 @@ import passport from 'passport';
 import morgan from 'morgan';
 import helmet from 'helmet';
 
-import pageRouter from './routes/page';
 import authRouter from './routes/auth';
-import { notFoundHandler, errorHandler } from './middlewares/error';
+import { notFoundHandler, errorHandler } from './utils/errorHandler';
 import passportConfig from './config/passport';
 import logger from './config/logger';
 
@@ -59,7 +58,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', pageRouter);
 app.use('/auth', authRouter);
 
 app.use(notFoundHandler);
