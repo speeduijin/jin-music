@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 
 import authRouter from './routes/auth';
+import songRouter from './routes/song';
 import { notFoundHandler, errorHandler } from './utils/errorHandler';
 import passportConfig from './config/passport';
 import logger from './config/logger';
@@ -59,6 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth', authRouter);
+app.use('/song', songRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
