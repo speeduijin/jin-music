@@ -8,6 +8,7 @@ import helmet from 'helmet';
 
 import authRouter from './routes/auth';
 import songRouter from './routes/song';
+import userRouter from './routes/user';
 import { notFoundHandler, errorHandler } from './utils/errorHandler';
 import passportConfig from './config/passport';
 import logger from './config/logger';
@@ -61,6 +62,7 @@ app.use(passport.session());
 
 app.use('/auth', authRouter);
 app.use('/song', songRouter);
+app.use('/user', userRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
