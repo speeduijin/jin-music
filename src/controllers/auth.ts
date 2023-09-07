@@ -48,9 +48,11 @@ const login: RequestHandler = (req, res, next) => {
     ) => {
       if (authError) return next(authError);
 
-      const { status, message } = resMap[info.message];
+      if (!user) {
+        const { status, message } = resMap[info.message];
 
-      if (!user) return res.status(status).json({ message });
+        return res.status(status).json({ message });
+      }
 
       return req.login(user, (loginError) => {
         if (loginError) return next(loginError);
