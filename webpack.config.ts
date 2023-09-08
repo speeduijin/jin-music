@@ -60,7 +60,7 @@ const config: Configuration = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css',
+      filename: isDevelopment ? '[name].css' : '[name].[contenthash].css',
     }),
     new HtmlWebpackPlugin({
       template: 'public/index.html',
