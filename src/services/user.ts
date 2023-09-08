@@ -48,4 +48,32 @@ const postLikedSong = async (reqUserId: number, reqSongId: number) => {
   return 'noUser';
 };
 
-export { getLikedSong, postLikedSong };
+const delLikedSong = async (reqUserId: number, reqSongId: number) => {
+  if (!reqSongId) return 'InvalidReqSongId';
+
+  const [exUser]: [User[], FieldPacket[]] = await promisePool.execute(
+    'SELECT * FROM users WHERE id = ?',
+    [reqUserId],
+  );
+
+  if (exUser) {
+    const [exLikedSong]: [LikedSong[], FieldPacket[]] =
+      await promisePool.execute(
+        'SELECT * FROM liked_song WHERE user_id = ? AND song_id = ?',
+        [reqUserId, reqSongId],
+      );
+
+    if (exLikedSong.length === 0) return 'notLiked';
+
+    await promisePool.execute(
+      'DELETE FROM liked_song WHERE user_id = ? AND song_id = ?',
+      [reqUserId, reqSongId],
+    );
+
+    return 'delCompleted';
+  }
+
+  return 'noUser';
+};
+
+export { getLikedSong, postLikedSong, delLikedSong };
