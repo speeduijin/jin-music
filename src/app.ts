@@ -5,6 +5,8 @@ import compression from 'compression';
 import passport from 'passport';
 import morgan from 'morgan';
 import helmet from 'helmet';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import cors from 'cors';
 
 import authRouter from './routes/auth';
 import songRouter from './routes/song';
@@ -30,6 +32,8 @@ if (isProduction) {
     // TODO: form 있는 경우 XSS, CSRF 방어 필요!!!
     // TODO: SQL Injection 방어 필요!!!
   );
+} else {
+  app.use(cors());
 }
 
 app.use(
