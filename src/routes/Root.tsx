@@ -1,10 +1,11 @@
 import React from 'react';
+import Chart from '../component/Chart';
 
 const Root = () => {
   return (
-    <div>
-      <h1>Hello world!</h1>
-    </div>
+    <>
+      <Chart />
+    </>
   );
 };
 
