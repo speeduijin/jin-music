@@ -3,7 +3,7 @@ import axios from 'axios';
 import Song from '../types/song';
 
 const Chart = () => {
-  const [songs, setSongs] = useState<Song[]>([]);
+  const [chartData, setChartData] = useState<Song[]>([]);
 
   const isProducrion = process.env.NODE_ENV === 'production';
 
@@ -13,7 +13,7 @@ const Chart = () => {
 
   useEffect(() => {
     axios.get(apiUrl).then((res) => {
-      setSongs(res.data);
+      setChartData(res.data);
     });
   }, []);
 
@@ -21,7 +21,7 @@ const Chart = () => {
     <section className="chart">
       <h2 className="chart-title">인기곡</h2>
       <ol className="chart-list">
-        {songs.map((song, id) => (
+        {chartData.map((song, id) => (
           <li className="chart-item" key={song.id}>
             <div className="chart-item-left">
               <div className="chart-rank">{id + 1}</div>
