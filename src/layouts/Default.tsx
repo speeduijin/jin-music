@@ -1,8 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import GlobalHeader from './component/GlobalHeader';
+import GlobalHeader from '../component/GlobalHeader';
 
-const Layout = () => {
+const Default = () => {
   return (
     <>
       <GlobalHeader />
@@ -13,4 +13,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default Default;
