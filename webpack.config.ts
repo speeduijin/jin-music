@@ -12,7 +12,6 @@ interface Configuration extends WebpackConfiguration {
 }
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
-// const isDevelopment = false;
 
 const config: Configuration = {
   mode: isDevelopment ? 'development' : 'production',
@@ -74,12 +73,12 @@ const config: Configuration = {
     open: true,
     port: 8080,
     // static: { directory: path.resolve(__dirname, 'dist') },
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://localhost:3000',
-    //     changeOrigin: true,
-    //   },
-    // },
+    proxy: [
+      {
+        context: ['/auth', '/song'],
+        target: 'http://localhost:3000',
+      },
+    ],
   },
 };
 export default config;
