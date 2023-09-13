@@ -12,6 +12,8 @@ import './styles/main.scss';
 const rootElement = document.getElementById('root') as HTMLElement;
 const root = createRoot(rootElement);
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -25,7 +27,11 @@ const router = createBrowserRouter([
 ]);
 
 root.render(
-  <StrictMode>
+  isProduction ? (
     <RouterProvider router={router} />
-  </StrictMode>,
+  ) : (
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>
+  ),
 );
