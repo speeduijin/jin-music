@@ -1,5 +1,5 @@
 import React from 'react';
-import Chart from '../component/Chart';
+import Chart from '../components/Chart';
 
 const Root = () => {
   return (

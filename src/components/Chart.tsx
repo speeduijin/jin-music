@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios, { AxiosError, isAxiosError } from 'axios';
+import Error from '../components/Error';
 import Song from '../types/song';
 
 const Chart = () => {
   const [chartData, setChartData] = useState<Song[]>([]);
+  const [hasError, setHasError] = useState(false);
 
   const apiUrl = '/song/chart';
 
@@ -14,11 +16,12 @@ const Chart = () => {
 
         setChartData(response.data);
       } catch (error) {
-        if (axios.isAxiosError(error))
-          console.error((error as AxiosError).response?.data);
+        setHasError(true);
       }
     })(apiUrl);
   }, []);
+
+  if (hasError) return <Error />;
 
   return (
     <section className="chart">
