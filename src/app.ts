@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
@@ -45,6 +46,8 @@ app.use(
     },
   }),
 );
+
+app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // extended - 객체로 변환
 app.use(cookieParser());
@@ -67,6 +70,10 @@ app.use(passport.session());
 app.use('/auth', authRouter);
 app.use('/song', songRouter);
 app.use('/user', userRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client', 'index.html'));
+});
 
 app.use(notFoundHandler);
 app.use(errorHandler);
