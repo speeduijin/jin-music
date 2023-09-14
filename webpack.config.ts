@@ -23,9 +23,8 @@ const config: Configuration = {
 
   output: {
     filename: 'main.[chunkhash].js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../jin-music-api/client'),
     pathinfo: isDevelopment,
-    // publicPath: '/dist/',
     clean: true,
   },
   module: {
@@ -72,7 +71,6 @@ const config: Configuration = {
     historyApiFallback: true,
     open: true,
     port: 8080,
-    // static: { directory: path.resolve(__dirname, 'dist') },
     proxy: [
       {
         context: ['/auth', '/song'],
@@ -81,4 +79,5 @@ const config: Configuration = {
     ],
   },
 };
+
 export default config;
