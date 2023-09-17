@@ -69,4 +69,20 @@ const logout: RequestHandler = (req, res) => {
   });
 };
 
-export { join, login, logout };
+const isLoggedIn: RequestHandler = (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.json({ message: 'ok' });
+  }
+  return res.status(401).json({ message: '사용자가 로그인하지 않았습니다.' });
+};
+
+const isNotLoggedIn: RequestHandler = (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.json({ message: 'ok' });
+  }
+  return res
+    .status(401)
+    .json({ message: '로그인하지 않은 사용자만 접근 가능합니다.' });
+};
+
+export { join, login, logout, isLoggedIn, isNotLoggedIn };
