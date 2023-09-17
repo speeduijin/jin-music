@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import axios, { AxiosError, isAxiosError } from 'axios';
-import Error from '../components/Error';
+import React from 'react';
 import Song from '../types/song';
+import { useLoaderData } from 'react-router-dom';
+import axios from 'axios';
+
+export const chartLoader = async () => {
+  try {
+    const response = await axios.get<Song[]>('/song/chart');
+    return response.data;
+  } catch (error) {
+    throw new Response();
+  }
+};
 
 const Chart = () => {
-  const [chartData, setChartData] = useState<Song[]>([]);
-  const [hasError, setHasError] = useState(false);
-
-  const apiUrl = '/song/chart';
-
-  useEffect(() => {
-    (async (url) => {
-      try {
-        const response = await axios.get<Song[]>(url);
-
-        setChartData(response.data);
-      } catch (error) {
-        setHasError(true);
-      }
-    })(apiUrl);
-  }, []);
-
-  if (hasError) return <Error />;
+  const chartData = useLoaderData() as Song[];
 
   return (
     <section className="chart">

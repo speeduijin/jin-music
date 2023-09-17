@@ -1,10 +1,10 @@
 import React from 'react';
-import Chart from '../components/Chart';
+import { Outlet } from 'react-router-dom';
 
 const Root = () => {
   return (
     <>
-      <Chart />
+      <Outlet />
     </>
   );
 };

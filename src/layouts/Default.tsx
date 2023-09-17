@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import GlobalHeader from '../component/GlobalHeader';
+import GlobalHeader from '../components/GlobalHeader';
 
 const Default = () => {
   return (
@@ -9,6 +9,7 @@ const Default = () => {
       <main>
         <Outlet />
       </main>
+      <div>뮤직플레이어</div>
     </>
   );
 };
