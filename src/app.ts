@@ -47,7 +47,7 @@ app.use(
   }),
 );
 
-app.use(express.static(path.join(__dirname, '../client')));
+if (isProduction) app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // extended - 객체로 변환
 app.use(cookieParser());
@@ -71,9 +71,11 @@ app.use('/auth', authRouter);
 app.use('/song', songRouter);
 app.use('/user', userRouter);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client', 'index.html'));
-});
+if (isProduction) {
+  app.get('*', (req, res) =>
+    res.sendFile(path.join(__dirname, '../client', 'index.html')),
+  );
+}
 
 app.use(notFoundHandler);
 app.use(errorHandler);
