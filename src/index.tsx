@@ -6,7 +6,9 @@ import {
   Navigate,
 } from 'react-router-dom';
 import Default from './layouts/Default';
+import Auth, { authLoader } from './layouts/Auth';
 import Root from './routes/Root';
+import Login from './routes/Login';
 import Chart, { chartLoader } from './components/Chart';
 import Error from './components/Error';
 import './styles/main.scss';
@@ -31,6 +33,12 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    element: <Auth />,
+    errorElement: <Error />,
+    loader: authLoader,
+    children: [{ path: '/login', element: <Login /> }],
   },
   {
     path: '*',
