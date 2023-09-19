@@ -6,12 +6,13 @@ import {
   Navigate,
 } from 'react-router-dom';
 import Default from './layouts/Default';
-import Auth, { authLoader } from './layouts/Auth';
+import Auth from './layouts/Auth';
 import Root from './routes/Root';
 import Login from './routes/Login';
 import Join from './routes/Join';
 import Chart, { chartLoader } from './components/Chart';
 import Error from './components/Error';
+import { isNotLoggedIn } from './loaders/auth';
 import './styles/main.scss';
 
 const rootElement = document.getElementById('root') as HTMLElement;
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
   {
     element: <Auth />,
     errorElement: <Error />,
-    loader: authLoader,
+    loader: isNotLoggedIn,
     children: [
       { path: '/login', element: <Login /> },
       { path: '/join', element: <Join /> },
