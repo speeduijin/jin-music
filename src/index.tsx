@@ -9,6 +9,7 @@ import Default from './layouts/Default';
 import Auth, { authLoader } from './layouts/Auth';
 import Root from './routes/Root';
 import Login from './routes/Login';
+import Join from './routes/Join';
 import Chart, { chartLoader } from './components/Chart';
 import Error from './components/Error';
 import './styles/main.scss';
@@ -38,7 +39,10 @@ const router = createBrowserRouter([
     element: <Auth />,
     errorElement: <Error />,
     loader: authLoader,
-    children: [{ path: '/login', element: <Login /> }],
+    children: [
+      { path: '/login', element: <Login /> },
+      { path: '/join', element: <Join /> },
+    ],
   },
   {
     path: '*',

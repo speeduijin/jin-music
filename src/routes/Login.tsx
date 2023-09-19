@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
 function Login() {
