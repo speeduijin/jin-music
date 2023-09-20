@@ -73,7 +73,7 @@ const config: Configuration = {
     port: 8080,
     proxy: [
       {
-        context: ['/auth', '/song'],
+        context: ['/auth', '/song', '/user'],
         target: 'http://localhost:3000',
       },
     ],

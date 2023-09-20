@@ -8,8 +8,9 @@ const GlobalHeader = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get('/auth/isloggedin');
-        setIsLoggedIn(true);
+        const response = await axios.get('/user/info');
+        const user = response.data;
+        user && setIsLoggedIn(true);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           const status = error.response?.status;
@@ -25,8 +26,8 @@ const GlobalHeader = () => {
   }, [isLoggedIn]);
 
   const handleLogout = async () => {
-    const res = await axios.get('/auth/logout');
-    setIsLoggedIn(false);
+    const response = await axios.get('/auth/logout');
+    if (response.data.message === 'Logout successful.') setIsLoggedIn(false);
   };
 
   return (
@@ -37,13 +38,15 @@ const GlobalHeader = () => {
             Login
           </Link>
         ) : (
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="btn btn-logout"
-          >
-            Logout
-          </button>
+          <>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="btn btn-logout"
+            >
+              Logout
+            </button>
+          </>
         )}
       </div>
     </header>
