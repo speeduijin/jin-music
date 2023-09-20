@@ -72,4 +72,9 @@ const delLikedSong: RequestHandler = async (req, res, next) => {
   }
 };
 
-export { getLikedSong, postLikedSong, delLikedSong };
+const getInfo: RequestHandler = (req, res) => {
+  const { user } = req;
+  return res.json(user);
+};
+
+export { getLikedSong, postLikedSong, delLikedSong, getInfo };
