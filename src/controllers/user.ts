@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import {
   getLikedSong as getLikedSongService,
+  getLikedSongId as getLikedSongIdService,
   postLikedSong as postLikedSongService,
   delLikedSong as delLikedSongService,
 } from '../services/user';
@@ -22,6 +23,21 @@ const getLikedSong: RequestHandler = async (req, res, next) => {
   try {
     if (userId) {
       const result = await getLikedSongService(userId);
+
+      return res.json(result);
+    }
+
+    return res.status(401).json({ message: '사용자가 로그인하지 않았습니다.' });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const getLikedSongId: RequestHandler = async (req, res, next) => {
+  const userId = req.user?.id;
+  try {
+    if (userId) {
+      const result = await getLikedSongIdService(userId);
 
       return res.json(result);
     }
@@ -77,4 +93,4 @@ const getInfo: RequestHandler = (req, res) => {
   return res.json(user);
 };
 
-export { getLikedSong, postLikedSong, delLikedSong, getInfo };
+export { getLikedSong, getLikedSongId, postLikedSong, delLikedSong, getInfo };

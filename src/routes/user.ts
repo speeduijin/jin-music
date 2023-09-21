@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   getLikedSong,
+  getLikedSongId,
   postLikedSong,
   delLikedSong,
   getInfo,
@@ -10,6 +11,8 @@ import { isLoggedIn } from '../utils/authMiddleware';
 const router = express.Router();
 
 router.get('/likedsong', isLoggedIn, getLikedSong);
+
+router.get('/likedsongid', isLoggedIn, getLikedSongId);
 
 router.post('/likedsong/:songId', isLoggedIn, postLikedSong);
 

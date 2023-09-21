@@ -17,8 +17,24 @@ const getLikedSong = async (reqUserId: number) => {
     query,
     [reqUserId],
   );
-
   return likedSong;
+};
+
+const getLikedSongId = async (reqUserId: number) => {
+  const query = `
+    SELECT songs.id FROM songs
+    INNER JOIN liked_song ON songs.id = liked_song.song_id
+    WHERE liked_song.user_id = ?
+  `;
+
+  const [likedSong]: [Song[], FieldPacket[]] = await promisePool.execute(
+    query,
+    [reqUserId],
+  );
+
+  const likedSongId = likedSong.map((song) => song.id);
+
+  return likedSongId;
 };
 
 const postLikedSong = async (reqUserId: number, reqSongId: number) => {
@@ -76,4 +92,4 @@ const delLikedSong = async (reqUserId: number, reqSongId: number) => {
   return 'noUser';
 };
 
-export { getLikedSong, postLikedSong, delLikedSong };
+export { getLikedSong, getLikedSongId, postLikedSong, delLikedSong };
