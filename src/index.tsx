@@ -5,7 +5,7 @@ import {
   createBrowserRouter,
   Navigate,
 } from 'react-router-dom';
-import Default from './layouts/Default';
+import Default, { userLoader } from './layouts/Default';
 import Auth from './layouts/Auth';
 import Root from './routes/Root';
 import Login from './routes/Login';
@@ -21,6 +21,7 @@ const root = createRoot(rootElement);
 const router = createBrowserRouter([
   {
     element: <Default />,
+    loader: userLoader,
     children: [
       {
         path: '/',

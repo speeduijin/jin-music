@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLoaderData, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import Song from '../types/song';
+import User from '../types/user';
 
 export const chartLoader = async () => {
   try {
@@ -21,10 +22,10 @@ const Chart = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get('/user/info');
+        const response = await axios.get<User>('/user/info');
         const user = response.data;
         if (user) {
-          const likesResponse = await axios.get('/user/likedsongid');
+          const likesResponse = await axios.get<number[]>('/user/likedsongid');
           setLikes([...likesResponse.data]);
         }
       } catch (error) {
