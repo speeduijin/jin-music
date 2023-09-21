@@ -11,6 +11,7 @@ import Root from './routes/Root';
 import Login from './routes/Login';
 import Join from './routes/Join';
 import Chart, { chartLoader } from './components/Chart';
+import LikedSong, { likedSongLoader } from './components/LikedSong';
 import Error from './components/Error';
 import { isNotLoggedIn } from './loaders/auth';
 import './styles/main.scss';
@@ -33,6 +34,12 @@ const router = createBrowserRouter([
             element: <Chart />,
             errorElement: <Error />,
             loader: chartLoader,
+          },
+          {
+            path: '/likedsong',
+            element: <LikedSong />,
+            errorElement: <Error />,
+            loader: likedSongLoader,
           },
         ],
       },
