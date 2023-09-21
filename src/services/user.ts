@@ -6,11 +6,12 @@ import User from '../types/user';
 
 const getLikedSong = async (reqUserId: number) => {
   const query = `
-    SELECT songs.id, songs.youtube_video_id, songs.name, artists.name AS artist_name
-    FROM songs
-    LEFT JOIN artists ON songs.artist_id = artists.id
-    INNER JOIN liked_song ON songs.id = liked_song.song_id
-    WHERE liked_song.user_id = ?
+  SELECT songs.id, songs.youtube_video_id, songs.name, artists.name AS artist_name
+  FROM songs
+  LEFT JOIN artists ON songs.artist_id = artists.id
+  INNER JOIN liked_song ON songs.id = liked_song.song_id
+  WHERE liked_song.user_id = ?
+  ORDER BY liked_song.created_at DESC
   `;
 
   const [likedSong]: [Song[], FieldPacket[]] = await promisePool.execute(
