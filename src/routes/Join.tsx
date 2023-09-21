@@ -20,7 +20,6 @@ function Join() {
   const checkPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPasswordCheck(e.target.value);
     setMismatchError(joinData.password !== e.target.value);
-    console.log('asdf');
   };
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
