@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet, redirect } from 'react-router-dom';
 import axios from 'axios';
 import GlobalHeader from '../components/GlobalHeader';
 
@@ -27,8 +27,21 @@ const Default = () => {
   }, [isLoggedIn]);
 
   const handleLogout = async () => {
-    const response = await axios.get('/auth/logout');
-    if (response.data.message === 'Logout successful.') setIsLoggedIn(false);
+    try {
+      const response = await axios.get('/auth/logout');
+      if (response.data.message === 'Logout successful.') setIsLoggedIn(false);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status;
+        if (status && status < 500) {
+          const message: string = error.response?.data.message;
+          alert(message);
+          redirect('/');
+        } else {
+          throw new Response();
+        }
+      }
+    }
   };
 
   return (
