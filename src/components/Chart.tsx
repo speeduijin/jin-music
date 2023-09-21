@@ -1,7 +1,7 @@
-import React from 'react';
-import Song from '../types/song';
-import { useLoaderData } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLoaderData, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
+import Song from '../types/song';
 
 export const chartLoader = async () => {
   try {
@@ -14,6 +14,57 @@ export const chartLoader = async () => {
 
 const Chart = () => {
   const chartData = useLoaderData() as Song[];
+  const isLoggedInData = useOutletContext() as boolean;
+
+  const [likes, setLikes] = useState<number[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get('/user/info');
+        const user = response.data;
+        if (user) {
+          const likesResponse = await axios.get('/user/likedsongid');
+          setLikes([...likesResponse.data]);
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          const status = error.response?.status;
+          if (status && status < 500) {
+            const message: string = error.response?.data.message;
+            alert(message);
+          } else {
+            throw new Response();
+          }
+        }
+      }
+    })();
+  }, []);
+
+  const postLike = async (songId: number) => {
+    try {
+      const response = await axios.post(`/user/likedsong/${songId}`);
+      setLikes([...likes, songId]);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message: string = error.response?.data.message;
+        alert(message);
+      }
+    }
+  };
+
+  const delLike = async (songId: number) => {
+    try {
+      const response = await axios.delete(`/user/likedsong/${songId}`);
+      const result = likes.filter((e) => e !== songId);
+      setLikes([...result]);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message: string = error.response?.data.message;
+        alert(message);
+      }
+    }
+  };
 
   return (
     <section className="chart">
@@ -28,11 +79,27 @@ const Chart = () => {
                 <p className="chart-content-artist">{song.artist_name}</p>
               </div>
             </div>
-            <div className="chart-button">
-              <button type="button" className="btn-play">
-                play
-              </button>
-            </div>
+            {isLoggedInData && (
+              <div className="chart-button">
+                {likes.includes(song.id) ? (
+                  <button
+                    type="button"
+                    onClick={() => delLike(song.id)}
+                    className="btn-play"
+                  >
+                    Unlike
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => postLike(song.id)}
+                    className="btn-play"
+                  >
+                    Like
+                  </button>
+                )}
+              </div>
+            )}
           </li>
         ))}
       </ol>

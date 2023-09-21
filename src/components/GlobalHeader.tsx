@@ -1,35 +1,12 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 
-const GlobalHeader = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+interface P {
+  isLoggedIn: boolean;
+  handleLogout: () => Promise<void>;
+}
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.get('/user/info');
-        const user = response.data;
-        user && setIsLoggedIn(true);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          const status = error.response?.status;
-          if (status && status < 500) {
-            const message: string = error.response?.data.message;
-            return message;
-          } else {
-            throw new Response();
-          }
-        }
-      }
-    })();
-  }, [isLoggedIn]);
-
-  const handleLogout = async () => {
-    const response = await axios.get('/auth/logout');
-    if (response.data.message === 'Logout successful.') setIsLoggedIn(false);
-  };
-
+const GlobalHeader: FC<P> = ({ isLoggedIn, handleLogout }) => {
   return (
     <header className="global-header">
       <div className="button-group">
@@ -39,6 +16,9 @@ const GlobalHeader = () => {
           </Link>
         ) : (
           <>
+            <Link to="/likedsong" className="btn">
+              Liked Song
+            </Link>
             <button
               type="button"
               onClick={handleLogout}
