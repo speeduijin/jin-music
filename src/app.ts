@@ -22,7 +22,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 passportConfig();
 
 if (isProduction) {
-  app.enable('trust proxy');
+  // app.enable('trust proxy');
 
   app.use(
     helmet({
@@ -57,10 +57,10 @@ app.use(
     secret: process.env.COOKIE_SECRET!, // !: Non-Null
     resave: false,
     saveUninitialized: false,
-    proxy: isProduction, // true - nginx, apache...
+    // proxy: isProduction, // true - nginx, apache...
     cookie: {
       httpOnly: true,
-      secure: isProduction, // true - https
+      // secure: isProduction, // true - https
     },
   }),
 );
