@@ -22,12 +22,12 @@ const isProduction = process.env.NODE_ENV === 'production';
 passportConfig();
 
 if (isProduction) {
-  // app.enable('trust proxy');
+  app.enable('trust proxy');
 
   app.use(
     helmet({
-      // contentSecurityPolicy: false,
-      // crossOriginResourcePolicy: false,
+      contentSecurityPolicy: false,
+      crossOriginResourcePolicy: false,
     }),
 
     // TODO: form 있는 경우 XSS, CSRF 방어 필요!!!
@@ -57,7 +57,7 @@ app.use(
     secret: process.env.COOKIE_SECRET!, // !: Non-Null
     resave: false,
     saveUninitialized: false,
-    // proxy: isProduction, // true - nginx, apache...
+    proxy: isProduction, // true - nginx, apache...
     cookie: {
       httpOnly: true,
       // secure: isProduction, // true - https
