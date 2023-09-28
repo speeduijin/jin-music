@@ -28,7 +28,7 @@
         }
 
         .chart-content {
-          max-width: 150px;
+          max-width: 120px;
 
           &-song,
           &-artist {
@@ -47,10 +47,24 @@
           }
         }
       }
+    }
 
-      .chart-button .btn-play {
-        padding: 8px 16px;
+    .chart-button {
+      display: flex;
+      justify-content: flex-end;
+      width: 100px;
+
+      .btn {
         color: #fff;
+      }
+
+      .btn-play {
+        margin-right: 16px;
+      }
+
+      .btn-liked {
+        width: 70px;
+        padding: 8px 16px;
         background-color: #212121;
         border-radius: 4px;
       }

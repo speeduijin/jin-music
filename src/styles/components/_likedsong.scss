@@ -1,9 +1,24 @@
 .liked-song {
   padding: 0 16px 112px;
 
-  &-title {
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px;
     margin-bottom: 16px;
-    text-align: center;
+
+    .liked-song-title {
+      text-align: center;
+    }
+
+    .btn {
+      color: #fff;
+    }
+
+    .btn-play {
+      margin-right: 16px;
+      font-size: 25px;
+    }
   }
 
   &-list {
@@ -48,7 +63,7 @@
         }
       }
 
-      .liked-song-button .btn-play {
+      .liked-song-button .btn-liked {
         padding: 8px 16px;
         color: #fff;
         background-color: #212121;

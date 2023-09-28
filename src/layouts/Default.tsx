@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, redirect, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import GlobalHeader from '../components/GlobalHeader';
+import Player from '../components/Player';
 import User from '../types/user';
 import Message from '../types';
 
@@ -25,7 +26,22 @@ export const userLoader = async () => {
 
 const Default = () => {
   const userData = useLoaderData() as User;
+
   const [isLoggedIn, setIsLoggedIn] = useState(userData && true);
+  const [playlist, setPlaylist] = useState<string | string[]>('');
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlaylist = (playlist: string) => {
+    setPlaylist(playlist);
+  };
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+  };
+
+  const handlePause = () => {
+    setIsPlaying(false);
+  };
 
   const handleLogout = async () => {
     try {
@@ -49,9 +65,14 @@ const Default = () => {
     <>
       <GlobalHeader isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <main>
-        <Outlet context={isLoggedIn} />
+        <Outlet context={{ isLoggedIn, handlePlaylist, handlePlay }} />
       </main>
-      <div>뮤직플레이어</div>
+      <Player
+        playlist={playlist}
+        isPlaying={isPlaying}
+        handlePlay={handlePlay}
+        handlePause={handlePause}
+      />
     </>
   );
 };

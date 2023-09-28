@@ -1,0 +1,28 @@
+.iframe {
+  display: none;
+}
+
+.player-bar {
+  position: fixed;
+  bottom: 0;
+  display: none;
+  width: 100%;
+  max-width: 786px;
+  height: 64px;
+  background-color: #212121;
+
+  .button-group {
+    .btn {
+      height: 64px;
+      padding: 0 24px;
+      font-size: 18px;
+      color: #fff;
+      background-color: #212121;
+      border-radius: 4px;
+    }
+  }
+}
+
+.player-bar.active {
+  display: block;
+}

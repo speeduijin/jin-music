@@ -13,11 +13,20 @@ export const chartLoader = async () => {
   }
 };
 
+interface Context {
+  isLoggedIn: boolean;
+  handlePlaylist: (plalist: string | string[]) => void;
+  handlePlay: () => void;
+}
+
 const Chart = () => {
   const chartData = useLoaderData() as Song[];
-  const isLoggedInData = useOutletContext() as boolean;
+  const { isLoggedIn, handlePlaylist, handlePlay } =
+    useOutletContext() as Context;
 
   const [likes, setLikes] = useState<number[]>([]);
+
+  // console.log(playList);
 
   useEffect(() => {
     (async () => {
@@ -80,27 +89,35 @@ const Chart = () => {
                 <p className="chart-content-artist">{song.artist_name}</p>
               </div>
             </div>
-            {isLoggedInData && (
-              <div className="chart-button">
-                {likes.includes(song.id) ? (
-                  <button
-                    type="button"
-                    onClick={() => delLike(song.id)}
-                    className="btn-play"
-                  >
-                    Unlike
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => postLike(song.id)}
-                    className="btn-play"
-                  >
-                    Like
-                  </button>
-                )}
-              </div>
-            )}
+            <div className="chart-button">
+              <button
+                type="button"
+                onClick={() => {
+                  handlePlaylist(song.youtube_video_id);
+                  handlePlay();
+                }}
+                className="btn-play btn"
+              >
+                ▶
+              </button>
+              {isLoggedIn && likes.includes(song.id) ? (
+                <button
+                  type="button"
+                  onClick={() => delLike(song.id)}
+                  className="btn-liked btn"
+                >
+                  Unlike
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => postLike(song.id)}
+                  className="btn-liked btn"
+                >
+                  Like
+                </button>
+              )}
+            </div>
           </li>
         ))}
       </ol>
