@@ -26,8 +26,6 @@ const Chart = () => {
 
   const [likes, setLikes] = useState<number[]>([]);
 
-  // console.log(playList);
-
   useEffect(() => {
     (async () => {
       try {
@@ -100,23 +98,24 @@ const Chart = () => {
               >
                 ▶
               </button>
-              {isLoggedIn && likes.includes(song.id) ? (
-                <button
-                  type="button"
-                  onClick={() => delLike(song.id)}
-                  className="btn-liked btn"
-                >
-                  Unlike
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => postLike(song.id)}
-                  className="btn-liked btn"
-                >
-                  Like
-                </button>
-              )}
+              {isLoggedIn &&
+                (likes.includes(song.id) ? (
+                  <button
+                    type="button"
+                    onClick={() => delLike(song.id)}
+                    className="btn-liked btn"
+                  >
+                    Unlike
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => postLike(song.id)}
+                    className="btn-liked btn"
+                  >
+                    Like
+                  </button>
+                ))}
             </div>
           </li>
         ))}

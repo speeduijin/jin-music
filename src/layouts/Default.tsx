@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Outlet, redirect, useLoaderData } from 'react-router-dom';
 import axios from 'axios';
 import GlobalHeader from '../components/GlobalHeader';
