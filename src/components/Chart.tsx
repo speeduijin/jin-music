@@ -91,7 +91,7 @@ const Chart = () => {
               <button
                 type="button"
                 onClick={() => {
-                  handlePlaylist(song.youtube_video_id);
+                  handlePlaylist([song.youtube_video_id]);
                   handlePlay();
                 }}
                 className="btn-play btn"

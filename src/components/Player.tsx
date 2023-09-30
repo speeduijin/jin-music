@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
 
 interface P {
-  playlist: string | string[];
+  playlist: string[];
   isPlaying: boolean;
   handlePlay: () => void;
   handlePause: () => void;
@@ -11,22 +11,32 @@ interface P {
 const Player: FC<P> = ({ playlist, isPlaying, handlePlay, handlePause }) => {
   const [playIndex, setPlayIndex] = useState(0);
 
-  let url: string | string[];
-  Array.isArray(playlist)
-    ? (url = playlist.map((id) => `https://www.youtube.com/watch?v=${id}`))
-    : (url = `https://www.youtube.com/watch?v=${playlist}`);
+  const urls = playlist.map((id, idx) => ({
+    index: idx + 1,
+    url: `https://www.youtube.com/watch?v=${id}`,
+  }));
 
-  const active = url !== 'https://www.youtube.com/watch?v=' ? 'active' : '';
+  const handleNextVideo = (video: string | any[], playIndex: number) => {
+    if (playIndex === video.length - 1) {
+      setPlayIndex(0);
+    } else {
+      setPlayIndex(playIndex + 1);
+    }
+  };
+
+  const active = urls[0] && 'active';
 
   return (
     <>
       <ReactPlayer
-        url={url}
+        url={urls[0] && urls[playIndex].url}
         playing={isPlaying}
         loop={true}
+        onEnded={() => {
+          handleNextVideo(urls, playIndex);
+        }}
         className="iframe"
       />
-
       <div className={`player-bar ${active}`}>
         <div className="button-group ">
           {isPlaying ? (

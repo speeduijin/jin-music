@@ -28,10 +28,10 @@ const Default = () => {
   const userData = useLoaderData() as User;
 
   const [isLoggedIn, setIsLoggedIn] = useState(userData && true);
-  const [playlist, setPlaylist] = useState<string | string[]>('');
+  const [playlist, setPlaylist] = useState<string[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const handlePlaylist = (playlist: string) => {
+  const handlePlaylist = (playlist: string[]) => {
     setPlaylist(playlist);
   };
 
