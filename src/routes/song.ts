@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/chart', chart);
 
-router.patch('/:youtueVideoId/playcount', playCount);
+router.patch('/:songId/playcount', playCount);
 
 export default router;

@@ -14,14 +14,14 @@ const chart = async () => {
   return rows;
 };
 
-const playCount = async (reqYoutueVideoId: string) => {
-  if (!reqYoutueVideoId) {
-    return 'noYoutueVideoId';
+const playCount = async (reqId: number) => {
+  if (!reqId) {
+    return 'noReqId';
   }
 
   await promisePool.execute(
-    'UPDATE songs SET play_count = play_count + 1 WHERE youtube_video_id = ?',
-    [reqYoutueVideoId],
+    'UPDATE songs SET play_count = play_count + 1 WHERE id = ?',
+    [reqId],
   );
 
   return 'success';

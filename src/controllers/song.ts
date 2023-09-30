@@ -15,12 +15,12 @@ const chart: RequestHandler = async (req, res, next) => {
 };
 
 const playCount: RequestHandler = async (req, res, next) => {
-  const { youtueVideoId } = req.params;
+  const songId = parseInt(req.params.songId, 10);
 
   const resMap = {
-    noYoutueVideoId: {
+    noReqId: {
       status: 400,
-      message: '동영상 ID가 제공되지 않았습니다.',
+      message: 'ID가 제공되지 않았습니다.',
     },
     success: {
       status: 200,
@@ -28,7 +28,7 @@ const playCount: RequestHandler = async (req, res, next) => {
     },
   };
   try {
-    const result = await playCountService(youtueVideoId);
+    const result = await playCountService(songId);
 
     const { status, message } = resMap[result];
 
