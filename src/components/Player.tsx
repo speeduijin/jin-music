@@ -52,9 +52,9 @@ const Player: FC<P> = ({ playlist }) => {
         loop={true}
         onReady={() => {
           handlePlay();
+          patchAddPlaycount(urls[playIndex].songId);
         }}
         onEnded={() => {
-          patchAddPlaycount(urls[playIndex].songId);
           handleNextVideo(urls, playIndex);
         }}
         className="iframe"
