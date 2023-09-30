@@ -43,7 +43,7 @@
         }
 
         .liked-song-content {
-          max-width: 150px;
+          max-width: calc(100vw - 48px - 40px - 70px);
 
           &-song,
           &-artist {

@@ -28,7 +28,7 @@
         }
 
         .chart-content {
-          max-width: 120px;
+          max-width: calc(100vw - 48px - 40px - 100px);
 
           &-song,
           &-artist {
