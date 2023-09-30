@@ -3,6 +3,7 @@ import { useLoaderData, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import Song from '../types/song';
 import User from '../types/user';
+import { Playlist } from '../types';
 
 export const chartLoader = async () => {
   try {
@@ -15,14 +16,12 @@ export const chartLoader = async () => {
 
 interface Context {
   isLoggedIn: boolean;
-  handlePlaylist: (plalist: string | string[]) => void;
-  handlePlay: () => void;
+  handlePlaylist: (plalist: Playlist[]) => void;
 }
 
 const Chart = () => {
   const chartData = useLoaderData() as Song[];
-  const { isLoggedIn, handlePlaylist, handlePlay } =
-    useOutletContext() as Context;
+  const { isLoggedIn, handlePlaylist } = useOutletContext() as Context;
 
   const [likes, setLikes] = useState<number[]>([]);
 
@@ -91,8 +90,9 @@ const Chart = () => {
               <button
                 type="button"
                 onClick={() => {
-                  handlePlaylist([song.youtube_video_id]);
-                  handlePlay();
+                  handlePlaylist([
+                    { songId: song.id, youtubeVideoId: song.youtube_video_id },
+                  ]);
                 }}
                 className="btn-play btn"
               >

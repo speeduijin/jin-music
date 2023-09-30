@@ -4,7 +4,7 @@ import axios from 'axios';
 import GlobalHeader from '../components/GlobalHeader';
 import Player from '../components/Player';
 import User from '../types/user';
-import Message from '../types';
+import { Message, Playlist } from '../types';
 
 export const userLoader = async () => {
   try {
@@ -28,19 +28,10 @@ const Default = () => {
   const userData = useLoaderData() as User;
 
   const [isLoggedIn, setIsLoggedIn] = useState(userData && true);
-  const [playlist, setPlaylist] = useState<string[]>([]);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [playlist, setPlaylist] = useState<Playlist[]>([]);
 
-  const handlePlaylist = (playlist: string[]) => {
+  const handlePlaylist = (playlist: Playlist[]) => {
     setPlaylist(playlist);
-  };
-
-  const handlePlay = () => {
-    setIsPlaying(true);
-  };
-
-  const handlePause = () => {
-    setIsPlaying(false);
   };
 
   const handleLogout = async () => {
@@ -65,14 +56,9 @@ const Default = () => {
     <>
       <GlobalHeader isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <main>
-        <Outlet context={{ isLoggedIn, handlePlaylist, handlePlay }} />
+        <Outlet context={{ isLoggedIn, handlePlaylist }} />
       </main>
-      <Player
-        playlist={playlist}
-        isPlaying={isPlaying}
-        handlePlay={handlePlay}
-        handlePause={handlePause}
-      />
+      <Player playlist={playlist} />
     </>
   );
 };

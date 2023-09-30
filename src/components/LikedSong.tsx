@@ -14,13 +14,12 @@ export const likedSongLoader = async () => {
 
 interface Context {
   handlePlaylist: (plalist: string | string[]) => void;
-  handlePlay: () => void;
 }
 
 const LikedSong = () => {
   const isLoggedInData = useOutletContext() as boolean;
   const likedSongData = useLoaderData() as Song[];
-  const { handlePlaylist, handlePlay } = useOutletContext() as Context;
+  const { handlePlaylist } = useOutletContext() as Context;
 
   const videoIdList = likedSongData.map((data) => data.youtube_video_id);
 
@@ -50,7 +49,6 @@ const LikedSong = () => {
           type="button"
           onClick={() => {
             handlePlaylist(videoIdList);
-            handlePlay();
           }}
           className="btn-play btn"
         >

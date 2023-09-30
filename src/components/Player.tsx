@@ -1,26 +1,44 @@
+import axios from 'axios';
 import React, { FC, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
+import { Playlist } from '../types';
 
 interface P {
-  playlist: string[];
-  isPlaying: boolean;
-  handlePlay: () => void;
-  handlePause: () => void;
+  playlist: Playlist[];
 }
 
-const Player: FC<P> = ({ playlist, isPlaying, handlePlay, handlePause }) => {
+const Player: FC<P> = ({ playlist }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
   const [playIndex, setPlayIndex] = useState(0);
 
-  const urls = playlist.map((id, idx) => ({
+  const urls = playlist.map((song, idx) => ({
     index: idx + 1,
-    url: `https://www.youtube.com/watch?v=${id}`,
+    songId: song.songId,
+    url: `https://www.youtube.com/watch?v=${song.youtubeVideoId}`,
   }));
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+  };
+
+  const handlePause = () => {
+    setIsPlaying(false);
+  };
 
   const handleNextVideo = (video: string | any[], playIndex: number) => {
     if (playIndex === video.length - 1) {
       setPlayIndex(0);
     } else {
       setPlayIndex(playIndex + 1);
+    }
+  };
+
+  const patchAddPlaycount = async (songId: number) => {
+    try {
+      const response = await axios.patch(`/song/${songId}/playcount`);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+      }
     }
   };
 
@@ -32,7 +50,11 @@ const Player: FC<P> = ({ playlist, isPlaying, handlePlay, handlePause }) => {
         url={urls[0] && urls[playIndex].url}
         playing={isPlaying}
         loop={true}
+        onReady={() => {
+          handlePlay();
+        }}
         onEnded={() => {
+          patchAddPlaycount(urls[playIndex].songId);
           handleNextVideo(urls, playIndex);
         }}
         className="iframe"
