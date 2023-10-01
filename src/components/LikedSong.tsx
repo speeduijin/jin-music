@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Navigate, useLoaderData, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import Song from '../types/song';
+import { Playlist } from '../types';
 
 export const likedSongLoader = async () => {
   try {
@@ -13,7 +14,7 @@ export const likedSongLoader = async () => {
 };
 
 interface Context {
-  handlePlaylist: (plalist: string | string[]) => void;
+  handlePlaylist: (plalist: Playlist[]) => void;
 }
 
 const LikedSong = () => {
@@ -21,7 +22,10 @@ const LikedSong = () => {
   const likedSongData = useLoaderData() as Song[];
   const { handlePlaylist } = useOutletContext() as Context;
 
-  const videoIdList = likedSongData.map((data) => data.youtube_video_id);
+  const videoIdList: Playlist[] = likedSongData.map((song) => ({
+    songId: song.id,
+    youtubeVideoId: song.youtube_video_id,
+  }));
 
   const [likedSongs, setLikedSongs] = useState(likedSongData);
 
