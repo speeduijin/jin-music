@@ -33,10 +33,9 @@ if (isProduction) {
     // TODO: form 있는 경우 XSS, CSRF 방어 필요!!!
     // TODO: SQL Injection 방어 필요!!!
   );
+} else {
+  app.use(cors());
 }
-// else {
-app.use(cors());
-// }
 
 app.use(
   morgan(isProduction ? 'combined' : 'dev', {
