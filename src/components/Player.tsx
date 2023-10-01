@@ -11,15 +11,12 @@ const Player: FC<P> = ({ playlist }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playIndex, setPlayIndex] = useState(0);
 
-  console.log(playlist);
-
   const urls = playlist.map((song, idx) => ({
     index: idx + 1,
     songId: song.songId,
     url: `https://www.youtube.com/watch?v=${song.youtubeVideoId}`,
   }));
 
-  console.log(urls);
   const handlePlay = () => {
     setIsPlaying(true);
   };
