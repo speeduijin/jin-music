@@ -1,0 +1,74 @@
+.liked-song {
+  padding: 0 16px 112px;
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px;
+    margin-bottom: 16px;
+
+    .liked-song-title {
+      text-align: center;
+    }
+
+    .btn {
+      color: #fff;
+    }
+
+    .btn-play {
+      margin-right: 16px;
+      font-size: 25px;
+    }
+  }
+
+  &-list {
+    padding: 0 8px;
+
+    .liked-song-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      font-size: 14px;
+      font-weight: 500;
+      border-bottom: 1px solid #ffffff1a;
+
+      &-left {
+        display: flex;
+        align-items: center;
+
+        .liked-song-rank {
+          width: 24px;
+          margin-right: 16px;
+        }
+
+        .liked-song-content {
+          max-width: calc(100vw - 48px - 40px - 70px);
+
+          &-song,
+          &-artist {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          &-song {
+            margin-bottom: 3px;
+          }
+
+          &-artist {
+            font-weight: 400;
+            color: #ffffffb3;
+          }
+        }
+      }
+
+      .liked-song-button .btn-liked {
+        padding: 8px 16px;
+        color: #fff;
+        background-color: #212121;
+        border-radius: 4px;
+      }
+    }
+  }
+}
